@@ -62,3 +62,10 @@ if command -v flatpak >/dev/null 2>&1; then
     flatpak update
 fi
 
+# ---------------------------------------------------
+# Other
+# ---------------------------------------------------
+if command -v winetricks >/dev/null 2>&1; then
+    # If installed...
+    sudo winetricks --self-update
+fi
