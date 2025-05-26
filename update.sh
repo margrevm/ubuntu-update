@@ -40,13 +40,25 @@ sudo apt autoclean
 # Snap package update
 # ---------------------------------------------------
 echo "[Updating snap packages]"
+
+echo "➜ Upgrading snap packages to their latest version..."
 snap refresh
 
-echo "[Removing old snap packages]"
+echo "➜ Removing old snap packages"
 # This will remove unused snap packages (https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
 sudo snap list --all | while read snapname ver rev trk pub notes; do if [[ $notes = *disabled* ]]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
 
-echo "[Cleaning snap cache]"
+echo "➜ Cleaning snap cache"
 sudo du -sh /var/lib/snapd/cache/                  # Get used space
 sudo find /var/lib/snapd/cache/ -exec rm -v {} \;  # Remove cache
+
+# ---------------------------------------------------
+# flatpak package update
+# ---------------------------------------------------
+if command -v flatpak >/dev/null 2>&1; then
+    # If flatpak is installed...
+    echo "[Updating flatpak packages]"
+    echo "➜ Upgrading flatpak packages to their latest version..."
+    flatpak update
+fi
 
