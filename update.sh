@@ -8,7 +8,7 @@
 ## Usage: update [no arguments]
 
 # ---------------------------------------------------
-# APT package installation
+# APT package update
 # ---------------------------------------------------
 echo "[Updating apt packages]"
 
@@ -35,4 +35,18 @@ echo "➜ Cleaning package cache..."
 # be downloaded anymore (thus packages that are no longer in the repo or that have a newer version in the repo).
 # You can use 'apt clean' to remove all stored archives in your cache to safe even more disk space.
 sudo apt autoclean
+
+# ---------------------------------------------------
+# Snap package update
+# ---------------------------------------------------
+echo "[Updating snap packages]"
+snap refresh
+
+echo "[Removing old snap packages]"
+# This will remove unused snap packages (https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
+sudo snap list --all | while read snapname ver rev trk pub notes; do if [[ $notes = *disabled* ]]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
+
+echo "[Cleaning snap cache]"
+sudo du -sh /var/lib/snapd/cache/                  # Get used space
+sudo find /var/lib/snapd/cache/ -exec rm -v {} \;  # Remove cache
 
