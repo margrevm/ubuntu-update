@@ -58,8 +58,12 @@ sudo find /var/lib/snapd/cache/ -exec rm -v {} \;  # Remove cache
 if command -v flatpak >/dev/null 2>&1; then
     # If flatpak is installed...
     echo "[Updating flatpak packages]"
+
     echo "➜ Upgrading flatpak packages to their latest version..."
     flatpak update
+
+    echo "➜ Remove unused flatpak packages..."
+    flatpak uninstall --unused
 fi
 
 # ---------------------------------------------------
