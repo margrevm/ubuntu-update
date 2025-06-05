@@ -50,8 +50,8 @@ echo "➜ Removing old snap packages"
 sudo snap list --all | while read snapname ver rev trk pub notes; do if [ $notes = *disabled* ]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
 
 echo "➜ Cleaning snap cache"
-sudo du -sh /var/lib/snapd/cache/                  # Get used space
-sudo find /var/lib/snapd/cache/ -exec rm -v {} \;  # Remove cache -> does not work
+sudo du -sh /var/lib/snapd/cache/                   # Get used space
+sudo sh -c 'rm -rf /var/lib/snapd/cache/*'          # Remove cache
 
 # ---------------------------------------------------
 # flatpak package update
@@ -72,5 +72,5 @@ fi
 # ---------------------------------------------------
 if command -v winetricks >/dev/null 2>&1; then
     # If installed...
-    sudo winetricks --self-update # Do only if old
+    sudo winetricks --self-update
 fi
