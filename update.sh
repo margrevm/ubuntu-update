@@ -34,6 +34,7 @@ echo "➜ Cleaning package cache..."
 # 'apt autoclean' removes all stored archives in your cache for packages that can not 
 # be downloaded anymore (thus packages that are no longer in the repo or that have a newer version in the repo).
 # You can use 'apt clean' to remove all stored archives in your cache to safe even more disk space.
+sudo du -sh /var/cache/apt #Shows the cache
 sudo apt autoclean
 
 # ---------------------------------------------------
@@ -46,11 +47,11 @@ snap refresh
 
 echo "➜ Removing old snap packages"
 # This will remove unused snap packages (https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
-sudo snap list --all | while read snapname ver rev trk pub notes; do if [[ $notes = *disabled* ]]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
+sudo snap list --all | while read snapname ver rev trk pub notes; do if [ $notes = *disabled* ]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
 
 echo "➜ Cleaning snap cache"
 sudo du -sh /var/lib/snapd/cache/                  # Get used space
-sudo find /var/lib/snapd/cache/ -exec rm -v {} \;  # Remove cache
+sudo find /var/lib/snapd/cache/ -exec rm -v {} \;  # Remove cache -> does not work
 
 # ---------------------------------------------------
 # flatpak package update
@@ -71,5 +72,5 @@ fi
 # ---------------------------------------------------
 if command -v winetricks >/dev/null 2>&1; then
     # If installed...
-    sudo winetricks --self-update
+    sudo winetricks --self-update # Do only if old
 fi
