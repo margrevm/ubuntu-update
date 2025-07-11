@@ -50,8 +50,9 @@ echo "➜ Removing old snap packages"
 sudo snap list --all | while read snapname ver rev trk pub notes; do if [ $notes = *disabled* ]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
 
 echo "➜ Cleaning snap cache"
-sudo du -sh /var/lib/snapd/cache/                   # Get used space
+echo "Before: [$(sudo du -sh /var/lib/snapd/cache/)]"
 sudo sh -c 'rm -rf /var/lib/snapd/cache/*'          # Remove cache
+echo "After: [$(sudo du -sh /var/lib/snapd/cache/)]"
 
 # ---------------------------------------------------
 # flatpak package update
