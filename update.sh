@@ -42,7 +42,8 @@ sudo apt autoclean
 # ---------------------------------------------------
 echo "[Updating snap packages]"
 
-echo "➜ Upgrading snap packages to their latest version..."
+echo "➜ Force upgrading snap packages to their latest version..."
+# ... even if this not strictly necessary as snapd does this automatically in the background according to its own schedule.
 snap refresh
 
 echo "➜ Removing old snap packages"
@@ -72,6 +73,6 @@ fi
 # Other
 # ---------------------------------------------------
 if command -v winetricks >/dev/null 2>&1; then
-    # If installed...
+    # If winetricks is installed...
     sudo winetricks --self-update
 fi
