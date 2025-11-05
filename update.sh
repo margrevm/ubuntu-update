@@ -58,6 +58,8 @@ echo "After: [$(sudo du -sh /var/lib/snapd/cache/)]"
 # ---------------------------------------------------
 # flatpak package update
 # ---------------------------------------------------
+echo "[Updating flatpak packages]"
+
 if command -v flatpak >/dev/null 2>&1; then
     # If flatpak is installed...
     echo "[Updating flatpak packages]"
@@ -72,7 +74,10 @@ fi
 # ---------------------------------------------------
 # Other
 # ---------------------------------------------------
+echo "[Updating other packages]"
+
+# If winetricks is installed...
 if command -v winetricks >/dev/null 2>&1; then
-    # If winetricks is installed...
+    echo "➜ Update winetricks"
     sudo winetricks --self-update
 fi
