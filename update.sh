@@ -10,12 +10,12 @@
 # ---------------------------------------------------
 # APT package update
 # ---------------------------------------------------
-echo "[Updating apt packages]"
+printf '\033[1;32m[Updating apt packages]\033[0m\n'
 
-echo "➜ Updating apt repositories..."
+printf '\033[0;32m➜ Updating apt repositories...\033[0m\n'
 sudo apt update -y
 
-echo "➜ Upgrading apt packages to their latest version..."
+printf '\033[0;32m➜ Upgrading apt packages to their latest version...\033[0m\n'
 # 'apt full-upgrade' is an enhanced version of the 'apt upgrade' command. 
 # Apart from upgrading existing software packages, it installs and removes 
 # some packages to satisfy some dependencies. The command includes a smart conflict 
@@ -25,12 +25,12 @@ echo "➜ Upgrading apt packages to their latest version..."
 # Using 'upgrade' is considered safer in an environment where stability is critical. 
 sudo apt full-upgrade
 
-echo "➜ Removing unused apt package dependencies..."
+printf '\033[0;32m➜ Removing unused apt package dependencies...\033[0m\n'
 # ... packages that are not longer needed
 # The --purge option is used to remove their system wide config files as well.
-sudo apt autoremove --purge
+sudo apt autoremove --purge -y
 
-echo "➜ Cleaning package cache..."
+printf '\033[0;32m➜ Cleaning package cache...\033[0m\n'
 # 'apt autoclean' removes all stored archives in your cache for packages that can not 
 # be downloaded anymore (thus packages that are no longer in the repo or that have a newer version in the repo).
 # You can use 'apt clean' to remove all stored archives in your cache to safe even more disk space.
@@ -40,17 +40,17 @@ sudo apt autoclean
 # ---------------------------------------------------
 # Snap package update
 # ---------------------------------------------------
-echo "[Updating snap packages]"
+printf '\033[1;32m[Updating snap packages]\033[0m\n'
 
-echo "➜ Force upgrading snap packages to their latest version..."
+printf '\033[0;32m➜ Force upgrading snap packages to their latest version...\033[0m\n'
 # ... even if this not strictly necessary as snapd does this automatically in the background according to its own schedule.
 snap refresh
 
-echo "➜ Removing old snap packages"
+printf '\033[0;32m➜ Removing old snap packages\033[0m\n'
 # This will remove unused snap packages (https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
 sudo snap list --all | while read snapname ver rev trk pub notes; do if [ $notes = *disabled* ]; then sudo snap remove "$snapname" --revision="$rev"; fi; done
 
-echo "➜ Cleaning snap cache"
+printf '\033[0;32m➜ Cleaning snap cache\033[0m\n'
 echo "Before: [$(sudo du -sh /var/lib/snapd/cache/)]"
 sudo sh -c 'rm -rf /var/lib/snapd/cache/*'          # Remove cache
 echo "After: [$(sudo du -sh /var/lib/snapd/cache/)]"
@@ -58,33 +58,31 @@ echo "After: [$(sudo du -sh /var/lib/snapd/cache/)]"
 # ---------------------------------------------------
 # flatpak package update
 # ---------------------------------------------------
-echo "[Updating flatpak packages]"
-
 if command -v flatpak >/dev/null 2>&1; then
     # If flatpak is installed...
-    echo "[Updating flatpak packages]"
+    printf '\033[0;32m[Updating flatpak packages]\033[0m\n'
 
-    echo "➜ Upgrading flatpak packages to their latest version..."
+    printf '\033[0;32m➜ Upgrading flatpak packages to their latest version...\033[0m\n'
     flatpak update
 
-    echo "➜ Remove unused flatpak packages..."
+    printf '\033[0;32m➜ Remove unused flatpak packages...\033[0m\n'
     flatpak uninstall --unused
 fi
 
 # ---------------------------------------------------
 # Other
 # ---------------------------------------------------
-echo "[Updating other packages]"
+printf '\033[1;32m[Updating other packages]\033[0m\n'
 
 # If winetricks is installed...
 if command -v winetricks >/dev/null 2>&1; then
-    echo "➜ Update winetricks"
+    printf '\033[0;32m➜ Update winetricks\033[0m\n'
     sudo winetricks --self-update
 fi
 
 # If tailscale is installed...
 if command -v tailscale >/dev/null 2>&1; then
-    echo "➜ Update tailscale"
+    printf '\033[0;32m➜ Update tailscale\033[0m\n'
     # After a release upgrade of Ubuntu the tailscale repository may be broken and 'apt-get update'
     # might not work anymore.
     # Reinstalling it using the install script from tailscale.com ensures that the latest
