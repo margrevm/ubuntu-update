@@ -81,3 +81,13 @@ if command -v winetricks >/dev/null 2>&1; then
     echo "➜ Update winetricks"
     sudo winetricks --self-update
 fi
+
+# If tailscale is installed...
+if command -v tailscale >/dev/null 2>&1; then
+    echo "➜ Update tailscale"
+    # After a release upgrade of Ubuntu the tailscale repository may be broken and 'apt-get update'
+    # might not work anymore.
+    # Reinstalling it using the install script from tailscale.com ensures that the latest
+    # version compatible with the current Ubuntu version is installed.
+    curl -fsSL https://tailscale.com/install.sh | sh
+fi
