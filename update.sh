@@ -81,7 +81,7 @@ if command -v winetricks >/dev/null 2>&1; then
 fi
 
 # If tailscale is installed...
-if command -v tailscale >/dev/null 2>&1; then
+#if command -v tailscale >/dev/null 2>&1; then
     # After a release upgrade of Ubuntu the tailscale repository may be broken and 'apt-get update'
     # might not work anymore.
     # Reinstalling it using the install script from tailscale.com ensures that the latest
@@ -89,4 +89,4 @@ if command -v tailscale >/dev/null 2>&1; then
 
     #printf '\033[0;32m➜ Update tailscale\033[0m\n'
     #curl -fsSL https://tailscale.com/install.sh | sh
-fi
+#fi
