@@ -2,7 +2,7 @@
 
 ## Script to update packages from various sources and to upgrade Ubuntu OS
 ##
-## Copyright (C) 2025 Mike Margreve (mike.margreve@outlook.com)
+## Copyright (C) 2026 Mike Margreve (mike.margreve@outlook.com)
 ## Permission to copy and modify is granted under the foo license
 ##
 ## Usage: update [no arguments]
